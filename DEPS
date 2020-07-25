@@ -157,7 +157,8 @@ deps = {
    'https://boringssl.googlesource.com/boringssl.git' + '@' + Var('dart_boringssl_rev'),
 
   'src/third_party/dart':
-   Var('dart_git') + '/sdk.git' + '@' + Var('dart_revision'),
+   # Var('dart_git') + '/sdk.git' + '@' + Var('dart_revision'),
+    'https://github.com/clarkezone/sdk.git' + '@' + '8a1bc7126c6d8b9a052c97f8576e5327e455eef8',
 
   # WARNING: Unused Dart dependencies in the list below till "WARNING:" marker are removed automatically - see create_updated_flutter_deps.py.
 
