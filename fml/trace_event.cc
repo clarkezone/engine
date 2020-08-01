@@ -27,10 +27,10 @@ inline void FlutterTimelineEvent(const char* label,
                                  intptr_t argument_count,
                                  const char** argument_names,
                                  const char** argument_values) {
-  if (gAllowlist.Query(label)) {
+  //if (gAllowlist.Query(label)) {
     Dart_TimelineEvent(label, timestamp0, timestamp1_or_async_id, type,
                        argument_count, argument_names, argument_values);
-  }
+  //}
 }
 }  // namespace
 

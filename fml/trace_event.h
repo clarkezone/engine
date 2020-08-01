@@ -46,7 +46,7 @@
 #include "third_party/dart/runtime/include/dart_tools_api.h"
 
 #if (FLUTTER_RELEASE && !defined(OS_FUCHSIA))
-#define FLUTTER_TIMELINE_ENABLED 0
+#define FLUTTER_TIMELINE_ENABLED 1
 #else
 #define FLUTTER_TIMELINE_ENABLED 1
 #endif
