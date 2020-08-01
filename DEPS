@@ -158,7 +158,7 @@ deps = {
 
   'src/third_party/dart':
    # Var('dart_git') + '/sdk.git' + '@' + Var('dart_revision'),
-    'https://github.com/clarkezone/sdk.git' + '@' + 'a985527ef898712ddd2146dc5b3770d415f7ea81',
+    'https://github.com/clarkezone/sdk.git' + '@' + '3910d29ca45c37d5aa12a812601610631e9b007e',
 
   # WARNING: Unused Dart dependencies in the list below till "WARNING:" marker are removed automatically - see create_updated_flutter_deps.py.
 
