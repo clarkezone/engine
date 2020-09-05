@@ -9,6 +9,10 @@
 #include <stdint.h>
 #include <windows.h>
 
+#ifdef FLUTTER_WINRT
+#include <windows.ui.core.h>
+#endif
+
 #include "flutter_export.h"
 #include "flutter_messenger.h"
 #include "flutter_plugin_registrar.h"
@@ -70,10 +74,20 @@ typedef struct {
 // The caller owns the returned reference, and is responsible for calling
 // FlutterDesktopViewControllerDestroy. Returns a null pointer in the event of
 // an error.
+#ifndef FLUTTER_WINRT
 FLUTTER_EXPORT FlutterDesktopViewControllerRef
 FlutterDesktopViewControllerCreate(int width,
                                    int height,
                                    FlutterDesktopEngineRef engine);
+#endif
+
+//TODO
+#ifdef FLUTTER_WINRT
+FLUTTER_EXPORT FlutterDesktopViewControllerRef
+FlutterDesktopViewControllerCreateFromCoreWindow(
+    ABI::Windows::UI::Core::CoreWindow* window,
+                                   FlutterDesktopEngineRef engine);
+#endif
 
 // Shuts down the engine instance associated with |controller|, and cleans up
 // associated state.
@@ -97,6 +111,7 @@ FlutterDesktopViewControllerGetView(FlutterDesktopViewControllerRef controller);
 //
 // If the WindowProc was handled and further handling should stop, this returns
 // true and |result| will be populated. |result| is not set if returning false.
+#ifndef FLUTTER_WINRT
 FLUTTER_EXPORT bool FlutterDesktopViewControllerHandleTopLevelWindowProc(
     FlutterDesktopViewControllerRef controller,
     HWND hwnd,
@@ -104,6 +119,7 @@ FLUTTER_EXPORT bool FlutterDesktopViewControllerHandleTopLevelWindowProc(
     WPARAM wparam,
     LPARAM lparam,
     LRESULT* result);
+#endif
 
 // ========== Engine ==========
 

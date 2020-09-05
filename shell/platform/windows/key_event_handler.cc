@@ -48,6 +48,7 @@ namespace {
 /// Calls GetKeyState() an all modifier keys and packs the result in an int,
 /// with the re-defined values declared above for compatibility with the Flutter
 /// framework.
+#ifndef FLUTTER_WINRT
 int GetModsForKeyState() {
   int mods = 0;
 
@@ -81,6 +82,7 @@ int GetModsForKeyState() {
     mods |= kScrollLock;
   return mods;
 }
+#endif
 }  // namespace
 
 KeyEventHandler::KeyEventHandler(flutter::BinaryMessenger* messenger)
@@ -108,7 +110,9 @@ void KeyEventHandler::KeyboardHook(FlutterWindowsView* view,
   event.AddMember(kScanCodeKey, scancode, allocator);
   event.AddMember(kCharacterCodePointKey, character, allocator);
   event.AddMember(kKeyMapKey, kWindowsKeyMap, allocator);
+#ifndef FLUTTER_WINRT
   event.AddMember(kModifiersKey, GetModsForKeyState(), allocator);
+#endif
 
   switch (action) {
     case WM_KEYDOWN:

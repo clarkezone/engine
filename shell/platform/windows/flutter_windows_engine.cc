@@ -91,6 +91,7 @@ FlutterLocale CovertToFlutterLocale(const LanguageInfo& info) {
 
 FlutterWindowsEngine::FlutterWindowsEngine(const FlutterProjectBundle& project)
     : project_(std::make_unique<FlutterProjectBundle>(project)) {
+#ifndef FLUTTER_WINRT
   task_runner_ = std::make_unique<Win32TaskRunner>(
       GetCurrentThreadId(), [this](const auto* task) {
         if (!engine_) {
@@ -102,6 +103,19 @@ FlutterWindowsEngine::FlutterWindowsEngine(const FlutterProjectBundle& project)
           std::cerr << "Failed to post an engine task." << std::endl;
         }
       });
+#else
+  task_runner_ = std::make_unique<WinRTTaskRunner>(
+      GetCurrentThreadId(), [this](const auto* task) {
+        if (!engine_) {
+          std::cerr << "Cannot post an engine task when engine is not running."
+                    << std::endl;
+          return;
+        }
+        if (FlutterEngineRunTask(engine_, task) != kSuccess) {
+          std::cerr << "Failed to post an engine task." << std::endl;
+        }
+      });
+#endif
 
   // Set up the legacy structs backing the API handles.
   messenger_ = std::make_unique<FlutterDesktopMessenger>();
@@ -111,8 +125,10 @@ FlutterWindowsEngine::FlutterWindowsEngine(const FlutterProjectBundle& project)
 
   message_dispatcher_ =
       std::make_unique<IncomingMessageDispatcher>(messenger_.get());
+#ifndef FLUTTER_WINRT
   window_proc_delegate_manager_ =
       std::make_unique<Win32WindowProcDelegateManager>();
+#endif
 }
 
 FlutterWindowsEngine::~FlutterWindowsEngine() {
@@ -151,6 +167,7 @@ bool FlutterWindowsEngine::RunWithEntrypoint(const char* entrypoint) {
       std::back_inserter(entrypoint_argv),
       [](const std::string& arg) -> const char* { return arg.c_str(); });
 
+#ifndef FLUTTER_WINRT
   // Configure task runners.
   FlutterTaskRunnerDescription platform_task_runner = {};
   platform_task_runner.struct_size = sizeof(FlutterTaskRunnerDescription);
@@ -159,14 +176,37 @@ bool FlutterWindowsEngine::RunWithEntrypoint(const char* entrypoint) {
       [](void* user_data) -> bool {
     return static_cast<Win32TaskRunner*>(user_data)->RunsTasksOnCurrentThread();
   };
+
   platform_task_runner.post_task_callback = [](FlutterTask task,
                                                uint64_t target_time_nanos,
                                                void* user_data) -> void {
     static_cast<Win32TaskRunner*>(user_data)->PostTask(task, target_time_nanos);
   };
+
   FlutterCustomTaskRunners custom_task_runners = {};
   custom_task_runners.struct_size = sizeof(FlutterCustomTaskRunners);
   custom_task_runners.platform_task_runner = &platform_task_runner;
+#else
+  FlutterTaskRunnerDescription platform_task_runner = {};
+  platform_task_runner.struct_size = sizeof(FlutterTaskRunnerDescription);
+  platform_task_runner.user_data = task_runner_.get();
+  platform_task_runner.runs_task_on_current_thread_callback =
+      [](void* user_data) -> bool {
+    return reinterpret_cast<flutter::WinRTTaskRunner*>(user_data)
+        ->RunsTasksOnCurrentThread();
+  };
+  platform_task_runner.post_task_callback = [](FlutterTask task,
+                                               uint64_t target_time_nanos,
+                                               void* user_data) -> void {
+    reinterpret_cast<flutter::WinRTTaskRunner*>(user_data)->PostTask(
+        task, target_time_nanos);
+  };
+
+  FlutterCustomTaskRunners custom_task_runners = {};
+  custom_task_runners.struct_size = sizeof(FlutterCustomTaskRunners);
+  custom_task_runners.platform_task_runner = &platform_task_runner;
+
+#endif
 
   FlutterProjectArgs args = {};
   args.struct_size = sizeof(FlutterProjectArgs);
@@ -183,7 +223,9 @@ bool FlutterWindowsEngine::RunWithEntrypoint(const char* entrypoint) {
     auto host = static_cast<FlutterWindowsEngine*>(user_data);
     return host->HandlePlatformMessage(engine_message);
   };
+
   args.custom_task_runners = &custom_task_runners;
+
   if (aot_data_) {
     args.aot_data = aot_data_.get();
   }

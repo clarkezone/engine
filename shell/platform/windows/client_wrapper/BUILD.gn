@@ -18,6 +18,19 @@ _wrapper_sources = [
   "flutter_view_controller.cc",
 ]
 
+_wrapper_includes_winrt = [
+  "include/flutter/dart_project_winrt.h",
+  "include/flutter/flutter_engine_winrt.h",
+  "include/flutter/flutter_view_controller_winrt.h",
+  "include/flutter/flutter_view.h",
+  "include/flutter/plugin_registrar_windows.h",
+]
+
+_wrapper_sources_winrt = [
+  "flutter_engine_winrt.cc",
+  "flutter_view_controller_winrt.cc",
+]
+
 # This code will be merged into .../common/cpp/client_wrapper for client use,
 # so uses header paths that assume the merged state. Include the header
 # directories of the core wrapper files so these includes will work.
@@ -49,10 +62,40 @@ source_set("client_wrapper_windows") {
   ]
 }
 
+# Windows client wrapper build for internal use by the shell implementation.
+source_set("client_wrapper_windows_winrt") {
+  sources = _wrapper_sources_winrt
+  public = _wrapper_includes_winrt
+
+  deps = [
+    "//flutter/shell/platform/common/cpp:common_cpp_library_headers",
+    "//flutter/shell/platform/common/cpp/client_wrapper:client_wrapper",
+    "//flutter/shell/platform/windows:flutter_windows_headers",
+  ]
+
+  configs += [
+    "//flutter/shell/platform/common/cpp:desktop_library_implementation",
+    "//flutter/shell/platform/windows:flutter_windows_winrt_defs",
+  ]
+
+  public_configs = [
+    ":relative_core_wrapper_headers",
+    "//flutter/shell/platform/common/cpp:relative_flutter_library_headers",
+    "//flutter/shell/platform/windows:relative_flutter_windows_headers",
+  ]
+}
+
 # Copies the Windows client wrapper code to the output directory.
 publish_client_wrapper_extension("publish_wrapper_windows") {
   public = _wrapper_includes
   sources = _wrapper_sources
+}
+
+# Copies the Windows client wrapper code to the output directory.
+publish_client_wrapper_extension("publish_wrapper_windows_winrt") {
+  public = _wrapper_includes_winrt
+  sources = _wrapper_sources_winrt
+  directory_suffix = "winrt"
 }
 
 source_set("client_wrapper_library_stubs_windows") {

@@ -4,6 +4,11 @@
 
 #include "flutter/shell/platform/windows/angle_surface_manager.h"
 
+#ifdef FLUTTER_WINRT
+#include <windows.ui.core.h>
+#include <winrt/Windows.UI.Composition.h>
+#endif
+
 #include <iostream>
 
 namespace flutter {
@@ -186,10 +191,20 @@ bool AngleSurfaceManager::CreateSurface(WindowsRenderTarget* render_target,
       EGL_FIXED_SIZE_ANGLE, EGL_TRUE, EGL_WIDTH, width,
       EGL_HEIGHT,           height,   EGL_NONE};
 
+#ifndef FLUTTER_WINRT
   surface = eglCreateWindowSurface(
       egl_display_, egl_config_,
       static_cast<EGLNativeWindowType>(std::get<HWND>(*render_target)),
       surfaceAttributes);
+#else
+  auto thing =
+      std::get<winrt::Windows::UI::Composition::SpriteVisual>(*render_target);
+  surface = eglCreateWindowSurface(
+      egl_display_, egl_config_,
+      static_cast<EGLNativeWindowType>(winrt::get_abi(thing)),
+      surfaceAttributes);
+#endif
+
   if (surface == EGL_NO_SURFACE) {
     std::cerr << "Surface creation failed." << std::endl;
   }
