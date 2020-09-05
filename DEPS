@@ -105,7 +105,8 @@ allowed_hosts = [
 ]
 
 deps = {
-  'src': 'https://github.com/flutter/buildroot.git' + '@' + 'f83d1d75216e97fb696434bca1cb9a4e7a570fb6',
+  #'src': 'https://github.com/flutter/buildroot.git' + '@' + 'f83d1d75216e97fb696434bca1cb9a4e7a570fb6',
+  'src': 'https://github.com/clarkezone/buildroot.git' + '@' + 'd145b4e47a79fce694378a19579f559e465a2bbf',
 
    # Fuchsia compatibility
    #
@@ -155,7 +156,8 @@ deps = {
    'https://boringssl.googlesource.com/boringssl.git' + '@' + Var('dart_boringssl_rev'),
 
   'src/third_party/dart':
-   Var('dart_git') + '/sdk.git' + '@' + Var('dart_revision'),
+   #Var('dart_git') + '/sdk.git' + '@' + Var('dart_revision'),
+   'https://github.com/clarkezone/sdk.git' + '@' + 'f82bd705016de94781127761bfc7055e1860803b',
 
   # WARNING: Unused Dart dependencies in the list below till "WARNING:" marker are removed automatically - see create_updated_flutter_deps.py.
 
@@ -363,7 +365,8 @@ deps = {
    Var('dart_git') + '/root_certificates.git' + '@' + Var('dart_root_certificates_rev'),
 
   'src/third_party/skia':
-   Var('skia_git') + '/skia.git' + '@' +  Var('skia_revision'),
+   #Var('skia_git') + '/skia.git' + '@' +  Var('skia_revision'),
+   Var('github_git') + '/clarkezone/skia.git' + '@' + 'd13b92c47d8cb99e07dd5274dbf68253dab7486a',
 
   'src/third_party/ocmock':
    Var('ocmock_git') + '@' +  Var('ocmock_tag'),
@@ -391,7 +394,8 @@ deps = {
    Var('swiftshader_git') + '/SwiftShader.git' + '@' + '5d1e8540407c138f47028d64684f3da599430aa4',
 
    'src/third_party/angle':
-   Var('github_git') + '/google/angle.git' + '@' + 'f4e6ae915edaca2dd3b0efc555c1dbbb6b8abac4',
+   #Var('github_git') + '/google/angle.git' + '@' + 'f4e6ae915edaca2dd3b0efc555c1dbbb6b8abac4',
+   Var('github_git') + '/clarkezone/angle.git' + '@' + 'cef5313f402e94fcce2f190114c437676b871943',
 
   'src/third_party/pkg/when':
    Var('dart_git') + '/when.git' + '@' + '0.2.0',

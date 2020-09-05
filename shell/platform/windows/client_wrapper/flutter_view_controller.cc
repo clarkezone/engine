@@ -8,7 +8,6 @@
 #include <iostream>
 
 namespace flutter {
-
 FlutterViewController::FlutterViewController(int width,
                                              int height,
                                              const DartProject& project) {
