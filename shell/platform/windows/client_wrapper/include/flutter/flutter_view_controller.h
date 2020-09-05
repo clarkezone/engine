@@ -32,7 +32,7 @@ class FlutterViewController {
   // |dart_project| will be used to configure the engine backing this view.
   explicit FlutterViewController(int width,
                                  int height,
-                                 const DartProject& project);
+                                 const DartProject& project);  
 
   virtual ~FlutterViewController();
 

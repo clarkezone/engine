@@ -7,6 +7,10 @@
 
 #include <windows.h>
 
+#ifdef FLUTTER_WINRT
+#include <winrt/Windows.UI.Composition.h>
+#endif
+
 #include <string>
 #include <variant>
 
@@ -23,8 +27,12 @@ struct PhysicalWindowBounds {
   size_t height;
 };
 
-using WindowsRenderTarget = std::variant<
-    /*winrt::Windows::UI::Composition::SpriteVisual, */ HWND>;
+#ifdef FLUTTER_WINRT
+using WindowsRenderTarget =
+    std::variant<winrt::Windows::UI::Composition::SpriteVisual, HWND>;
+#else
+using WindowsRenderTarget = std::variant<HWND>;
+#endif
 
 // Abstract class for binding Windows platform windows to Flutter views.
 class WindowBindingHandler {
