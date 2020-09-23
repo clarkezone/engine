@@ -24,11 +24,11 @@ This fork of the Flutter Engine repo contains an experimental implementation of 
     - Tests fully enabled and UWP coverage added
     - Soft / Touch keyboard support
     - Keyboard modifiers, correct unicode handling
-        - Submit updates for UWP compatibility changes to dependent projects
-            - Angle
-            - SKIA
-            - Dart
-            - Buildroot
+    - Submit updates for UWP compatibility changes to dependent projects
+        - Angle
+        - SKIA
+        - Dart
+        - Buildroot
     - Secondary mouse buttons, font changes
     - ARM64 target
     - Tooling support
@@ -38,6 +38,7 @@ This fork of the Flutter Engine repo contains an experimental implementation of 
 - ### Known Issues
     - Text input on XBOX requires a physical keyboard, text pad
     - Some touch gestures don't work
+    - No support for up, down, left, right style controller navigation
 
 ## Build instructions
 - Setup a Flutter engine development environment: 
@@ -53,10 +54,8 @@ This fork of the Flutter Engine repo contains an experimental implementation of 
 
 
 
-
-
-Flutter Engine
-==============
+Flutter Engine README.md
+========================
 
 [![Build Status - Cirrus][]][Build status]
 
