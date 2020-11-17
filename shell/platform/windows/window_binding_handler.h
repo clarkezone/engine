@@ -29,7 +29,9 @@ struct PhysicalWindowBounds {
 
 #ifdef FLUTTER_WINRT
 using WindowsRenderTarget =
-    std::variant<winrt::Windows::UI::Composition::SpriteVisual, HWND>;
+    std::variant<winrt::Windows::UI::Composition::SpriteVisual,
+                 HWND,
+                 winrt::Windows::UI::Core::CoreWindow>;
 #else
 using WindowsRenderTarget = std::variant<HWND>;
 #endif

@@ -197,8 +197,10 @@ bool AngleSurfaceManager::CreateSurface(WindowsRenderTarget* render_target,
       static_cast<EGLNativeWindowType>(std::get<HWND>(*render_target)),
       surfaceAttributes);
 #else
+  /*auto thing =
+      std::get<winrt::Windows::UI::Composition::SpriteVisual>(*render_target);*/
   auto thing =
-      std::get<winrt::Windows::UI::Composition::SpriteVisual>(*render_target);
+      std::get<winrt::Windows::UI::Core::CoreWindow>(*render_target);
   surface = eglCreateWindowSurface(
       egl_display_, egl_config_,
       static_cast<EGLNativeWindowType>(winrt::get_abi(thing)),
@@ -225,11 +227,11 @@ void AngleSurfaceManager::ResizeSurface(WindowsRenderTarget* render_target,
     // preserve the previous surface contents. This resize approach could be
     // further optimized if Angle exposed a public entrypoint for
     // SwapChain11::reset or SwapChain11::resize.
-    DestroySurface();
+   /* DestroySurface();
     if (!CreateSurface(render_target, width, height)) {
       std::cerr << "AngleSurfaceManager::ResizeSurface failed to create surface"
                 << std::endl;
-    }
+    }*/
   }
 }
 

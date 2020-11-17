@@ -26,7 +26,7 @@ WinRTFlutterWindow::WinRTFlutterWindow(
 }
 
 WindowsRenderTarget WinRTFlutterWindow::GetRenderTarget() {
-  compositor_ = winrt::Windows::UI::Composition::Compositor();
+  /*compositor_ = winrt::Windows::UI::Composition::Compositor();
   target_ = compositor_.CreateTargetForCurrentView();
   visual_tree_root_ = compositor_.CreateContainerVisual();
   target_.Root(visual_tree_root_);
@@ -50,7 +50,8 @@ WindowsRenderTarget WinRTFlutterWindow::GetRenderTarget() {
   auto bounds = GetBounds(current_display_info_, true);
 
   sprite_visual_.Size({bounds.width, bounds.height});
-  return WindowsRenderTarget(sprite_visual_);
+  return WindowsRenderTarget(sprite_visual_);*/
+  return WindowsRenderTarget(window_);
 }
 
 void WinRTFlutterWindow::ApplyInverseDpiScalingTransform() {
@@ -299,13 +300,13 @@ double WinRTFlutterWindow::GetPosY(
 void WinRTFlutterWindow::OnBoundsChanged(
     winrt::Windows::UI::ViewManagement::ApplicationView const& appView,
     winrt::Windows::Foundation::IInspectable const&) {
-  if (binding_handler_delegate_) {
+  /*if (binding_handler_delegate_) {
     auto bounds = GetBounds(current_display_info_, true);
 
     binding_handler_delegate_->OnWindowSizeChanged(
         static_cast<size_t>(bounds.width), static_cast<size_t>(bounds.height));
     sprite_visual_.Size({bounds.width, bounds.height});
-  }
+  }*/
 }
 
 void WinRTFlutterWindow::OnKeyUp(
