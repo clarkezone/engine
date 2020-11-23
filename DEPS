@@ -390,8 +390,8 @@ deps = {
    Var('swiftshader_git') + '/SwiftShader.git' + '@' + '5d1e8540407c138f47028d64684f3da599430aa4',
 
    'src/third_party/angle':
-   #Var('github_git') + '/google/angle.git' + '@' + 'f4e6ae915edaca2dd3b0efc555c1dbbb6b8abac4',
-   Var('github_git') + '/clarkezone/angle.git' + '@' + 'cef5313f402e94fcce2f190114c437676b871943',
+   Var('github_git') + '/google/angle.git' + '@' + 'f4e6ae915edaca2dd3b0efc555c1dbbb6b8abac4',
+   #Var('github_git') + '/clarkezone/angle.git' + '@' + 'cef5313f402e94fcce2f190114c437676b871943',
 
   'src/third_party/pkg/when':
    Var('dart_git') + '/when.git' + '@' + '0.2.0',

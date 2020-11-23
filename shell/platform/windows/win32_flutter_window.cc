@@ -68,7 +68,31 @@ Win32FlutterWindow::Win32FlutterWindow(int width, int height)
     : binding_handler_delegate_(nullptr) {
   Win32Window::InitializeChild("FLUTTERVIEW", width, height);
   current_cursor_ = ::LoadCursor(nullptr, IDC_ARROW);
-}
+
+   namespace composition = winrt::Windows::UI::Composition;
+  //composition::Desktop::DesktopWindowTarget target{nullptr};
+  composition::Compositor compositor{nullptr};
+  composition::SpriteVisual visual{nullptr};
+
+  if (auto factory =
+          winrt::try_get_activation_factory<composition::Compositor>()) {
+  /*  auto options = DispatcherQueueOptions{};
+    options.dwSize = sizeof(DispatcherQueueOptions);
+    options.threadType = DQTYPE_THREAD_CURRENT;*/
+
+    /*if (auto ptr = CreateDispatcherQueueControllerJ(options)) {
+      compositor = factory.ActivateInstance<composition::Compositor>();
+      visual = compositor.CreateSpriteVisual();
+      visual.Size({100, 100});
+      visual.Offset({10, 10, 10});
+      visual.Brush(
+          compositor.CreateColorBrush(winrt::Windows::UI::Colors::Red()));
+
+      target = CreateDesktopWindowTarget(compositor, topLevel);
+      target.Root(visual);
+    }*/
+  }
+  }
 
 Win32FlutterWindow::~Win32FlutterWindow() {}
 

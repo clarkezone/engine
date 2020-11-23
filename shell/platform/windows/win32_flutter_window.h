@@ -11,10 +11,13 @@
 #include <string>
 #include <vector>
 
+#include <Unknwn.h>
 #include "flutter/shell/platform/embedder/embedder.h"
 #include "flutter/shell/platform/windows/flutter_windows_view.h"
 #include "flutter/shell/platform/windows/win32_window.h"
 #include "flutter/shell/platform/windows/window_binding_handler.h"
+#include "winrt/Windows.UI.Composition.h"
+//#include "third_party/cppwinrt/winrt/Windows.UI.Composition.h"
 
 namespace flutter {
 
@@ -81,6 +84,8 @@ class Win32FlutterWindow : public Win32Window, public WindowBindingHandler {
 
   // The last cursor set by Flutter. Defaults to the arrow cursor.
   HCURSOR current_cursor_;
+
+  winrt::Windows::UI::Composition::Compositor compositor_{nullptr};
 };
 
 }  // namespace flutter

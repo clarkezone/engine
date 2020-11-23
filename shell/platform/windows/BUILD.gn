@@ -25,6 +25,10 @@ config("flutter_windows_winrt_defs") {
   defines = [ "FLUTTER_WINRT 1" ]
 }
 
+config("cppwinrt_defs") {
+  include_dirs = ["..\..\..\..\third_party\cppwinrt"]
+}
+
 # The headers are a separate source set since the client wrapper is allowed
 # to depend on the public headers, but none of the rest of the code.
 source_set("flutter_windows_headers") {
@@ -43,6 +47,8 @@ source_set("flutter_windows_headers") {
 }
 
 source_set("flutter_windows_source") {
+  cflags = ["/EHsc"]
+
   sources = [
     "angle_surface_manager.cc",
     "angle_surface_manager.h",
@@ -84,6 +90,7 @@ source_set("flutter_windows_source") {
   configs += [
     "//flutter/shell/platform/common/cpp:desktop_library_implementation",
     "//third_party/angle:gl_prototypes",
+    ":cppwinrt_defs",
   ]
 
   public_configs = [ ":relative_angle_headers" ]
