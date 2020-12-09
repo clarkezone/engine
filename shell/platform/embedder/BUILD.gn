@@ -249,6 +249,8 @@ shared_library("flutter_engine_library") {
 
   deps = [ ":embedder" ]
 
+  libs = [ "psapi.lib" ]
+
   public_configs = [ "//flutter:config" ]
 }
 

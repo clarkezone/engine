@@ -78,6 +78,8 @@ group("flutter") {
     ]
   }
 
+  enable_unittests = false
+
   # Compile all benchmark targets if enabled.
   if (enable_unittests && !is_win) {
     public_deps += [

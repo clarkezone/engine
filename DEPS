@@ -100,7 +100,8 @@ allowed_hosts = [
 ]
 
 deps = {
-  'src': 'https://github.com/flutter/buildroot.git' + '@' + '64bf32094b19bfecc2515aedb7e130f7ba15d297',
+  #'src': 'https://github.com/flutter/buildroot.git' + '@' + '64bf32094b19bfecc2515aedb7e130f7ba15d297',
+  'src': 'https://github.com/clarkezone/buildroot.git' + '@' + 'dc85f9c1b3943d266bf2b128df95faeadc13c9f1',
 
    # Fuchsia compatibility
    #
@@ -358,7 +359,8 @@ deps = {
    Var('dart_git') + '/root_certificates.git' + '@' + Var('dart_root_certificates_rev'),
 
   'src/third_party/skia':
-   Var('skia_git') + '/skia.git' + '@' +  Var('skia_revision'),
+   #Var('skia_git') + '/skia.git' + '@' +  Var('skia_revision'),
+   Var('github_git') + '/clarkezone/skia.git' + '@' + '4a01f564dc2abcb0fa75c0ff08b3c1690eec82ed',
 
   'src/third_party/ocmock':
    Var('ocmock_git') + '@' +  Var('ocmock_tag'),
@@ -386,7 +388,8 @@ deps = {
    Var('swiftshader_git') + '/SwiftShader.git' + '@' + '5d1e8540407c138f47028d64684f3da599430aa4',
 
    'src/third_party/angle':
-   Var('github_git') + '/google/angle.git' + '@' + 'ed90c9917b1b7fc6def319184b10609c11b2bd84',
+   #Var('github_git') + '/google/angle.git' + '@' + 'ed90c9917b1b7fc6def319184b10609c11b2bd84',
+   Var('github_git') + '/clarkezone/angle.git' + '@' + '3e5d195936bb0eae78655fbbca26defb52f14af6',
 
    'src/third_party/angle/third_party/vulkan-headers/src':
    Var('fuchsia_git') + '/third_party/Vulkan-Headers.git' + '@' + '5de4e8fab88ef0bd6994d9ddbcc864e3179b9e79',
