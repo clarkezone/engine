@@ -389,7 +389,7 @@ deps = {
 
    'src/third_party/angle':
    #Var('github_git') + '/google/angle.git' + '@' + 'ed90c9917b1b7fc6def319184b10609c11b2bd84',
-   Var('github_git') + '/clarkezone/angle.git' + '@' + '3e5d195936bb0eae78655fbbca26defb52f14af6',
+   Var('github_git') + '/clarkezone/angle.git' + '@' + 'dabf461b8c2ef3c01c7ac81530a87fba481a9241',
 
    'src/third_party/angle/third_party/vulkan-headers/src':
    Var('fuchsia_git') + '/third_party/Vulkan-Headers.git' + '@' + '5de4e8fab88ef0bd6994d9ddbcc864e3179b9e79',
