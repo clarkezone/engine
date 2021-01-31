@@ -101,7 +101,7 @@ allowed_hosts = [
 
 deps = {
   #'src': 'https://github.com/flutter/buildroot.git' + '@' + 'e664d190b83ba911194a8a9517ae5f8bba3fcfaa',
-  'src': 'https://github.com/clarkezone/buildroot.git' + '@' + '936e021ab4726fa1fd7389622db87a52417e7973',
+  'src': 'https://github.com/clarkezone/buildroot.git' + '@' + '32d5a12e8a5a4c22b7cb7be71a24c2b6ecc27ea8',
 
    # Fuchsia compatibility
    #
@@ -388,7 +388,7 @@ deps = {
 
    'src/third_party/angle':
    #Var('github_git') + '/google/angle.git' + '@' + 'ed90c9917b1b7fc6def319184b10609c11b2bd84',
-   Var('github_git') + '/clarkezone/angle.git' + '@' + 'b2281efa1af738f63faa71343800d64009d81602',
+   Var('github_git') + '/clarkezone/angle.git' + '@' + '124d8011d9b87aad484811f9bbddaf7cdb8ff9f2',
 
    'src/third_party/angle/third_party/vulkan-headers/src':
    Var('fuchsia_git') + '/third_party/Vulkan-Headers.git' + '@' + '5de4e8fab88ef0bd6994d9ddbcc864e3179b9e79',
