@@ -101,7 +101,7 @@ allowed_hosts = [
 
 deps = {
   #'src': 'https://github.com/flutter/buildroot.git' + '@' + 'e664d190b83ba911194a8a9517ae5f8bba3fcfaa',
-  'src': 'https://github.com/clarkezone/buildroot.git' + '@' + '32d5a12e8a5a4c22b7cb7be71a24c2b6ecc27ea8',
+  'src': 'https://github.com/clarkezone/buildroot.git' + '@' + '24cbcb8a2eaad18da53a63577cad40b66a3e915d',
 
    # Fuchsia compatibility
    #
@@ -359,7 +359,8 @@ deps = {
    Var('dart_git') + '/root_certificates.git' + '@' + Var('dart_root_certificates_rev'),
 
   'src/third_party/skia':
-   Var('skia_git') + '/skia.git' + '@' +  Var('skia_revision'),
+   #Var('skia_git') + '/skia.git' + '@' +  Var('skia_revision'),
+   Var('github_git') + '/clarkezone/skia.git' + '@' + 'f2970fb469e565a5eb2e7ea4f14b235c56020b7c',
 
   'src/third_party/ocmock':
    Var('ocmock_git') + '@' +  Var('ocmock_tag'),

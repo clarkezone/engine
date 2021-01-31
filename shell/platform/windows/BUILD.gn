@@ -159,7 +159,7 @@ shared_library("flutter_windows") {
 
 shared_library("flutter_windows_winuwp") {
   deps = [ ":flutter_windows_source" ]
-  libs = [ "windowsapp.lib" ]
+  libs = [ "windowsapp.lib", "user32.lib" ]
   public_configs = [ "//flutter:config" ]
 }
 
@@ -171,7 +171,7 @@ executable("flutter_windows_unittests") {
   testonly = true
 
   if (target_os == "winuwp") {
-    libs = [ "windowsapp.lib" ]
+    libs = [ "windowsapp.lib", "user32.lib" ]
   }
 
   # Common Windows test sources.
