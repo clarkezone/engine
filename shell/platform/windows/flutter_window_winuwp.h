@@ -12,10 +12,12 @@
 
 #include <windows.ui.core.h>
 #include <winrt/Windows.UI.Composition.h>
+#include "winrt/Windows.System.Threading.h"
 #include <winrt/Windows.UI.Core.h>
 
 #include "flutter/shell/platform/embedder/embedder.h"
 #include "flutter/shell/platform/windows/flutter_windows_view.h"
+#include "flutter/shell/platform/windows/game_pad_winuwp.h"
 
 namespace flutter {
 
@@ -118,9 +120,37 @@ class FlutterWindowWinUWP : public WindowBindingHandler {
       winrt::Windows::Foundation::IInspectable const&,
       winrt::Windows::UI::Core::CharacterReceivedEventArgs const& args);
 
+  // Notifies current |WindowBindingHandlerDelegate| of gamepad right stick
+  // events as emulated mouse move events.
+  void OnGamePadLeftStickMoved(double x, double y);
+
+  // Notifies current |WindowBindingHandlerDelegate| of gamepad right stick
+  // events delivered as scroll events.
+  void OnGamePadRightStickMoved(double x, double y);
+
+  // Notifies current |WindowBindingHandlerDelegate| of left gamepad move events
+  // delivered as emulated mouse button events.
+  void OnGamePadButtonPressed(
+      winrt::Windows::Gaming::Input::GamepadButtons buttons);
+
+  // Notifies current |WindowBindingHandlerDelegate| of left gamepad move events
+  // delivered as emulated mouse button events.
+  void OnGamePadButtonReleased(
+      winrt::Windows::Gaming::Input::GamepadButtons buttons);
+
+  // Show and hide the emulated mouse cursor when a gamepad arrives / departs
+  void OnGamePadControllersChanged();
+
   // Creates a visual representing the emulated cursor and add to the  visual
   // tree
   winrt::Windows::UI::Composition::Visual CreateCursorVisual();
+
+  // Starts a low priority polling thread to translate gamepad input to emulated
+  // mouse events.
+  void StartGamepadCursorThread();
+
+  // consigure callbacks to Notifies when gamepad hardware events are received.
+  void ConfigureGamePad();
 
   // Test is current context is running on an xbox device and perform device
   // specific initialization.
@@ -160,6 +190,13 @@ class FlutterWindowWinUWP : public WindowBindingHandler {
   // SwapChain to the CoreWindow.
   winrt::Windows::UI::Composition::SpriteVisual render_target_{nullptr};
 
+  // Object responsible for handling the low level interactions with the
+  // gamepad.
+  std::unique_ptr<GamePadWinUWP> game_pad_{nullptr};
+
+  // A gamepad thread running is running or not.
+  bool game_controller_thread_running_ = false;
+
   // Is current context is executing on an XBOX
   // device.
   bool running_on_xbox_ = false;
@@ -173,6 +210,12 @@ class FlutterWindowWinUWP : public WindowBindingHandler {
   // Most recent display information.
   winrt::Windows::Graphics::Display::DisplayInformation current_display_info_{
       nullptr};
+
+  // Multipler used to map controller velocity to an appropriate scroll input.
+  const double kControllerScrollMultiplier = 3;
+
+  // Multiplier used to scale gamepad input to mouse equivalent response.
+  const int kCursorScale = 30;
 };
 
 }  // namespace flutter

@@ -81,6 +81,8 @@ source_set("flutter_windows_source") {
       "flutter_window_winuwp.cc",
       "flutter_window_winuwp.h",
       "flutter_windows_winuwp.cc",
+      "game_pad_winuwp.cc",
+      "game_pad_winuwp.h",
       "platform_handler_winuwp.cc",
       "platform_handler_winuwp.h",
       "system_utils_winuwp.cc",
@@ -171,7 +173,7 @@ executable("flutter_windows_unittests") {
   testonly = true
 
   if (target_os == "winuwp") {
-    libs = [ "windowsapp.lib" ]
+    libs = [ "windowsapp.lib", "user32.lib" ]
   }
 
   # Common Windows test sources.
