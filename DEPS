@@ -100,7 +100,12 @@ allowed_hosts = [
 ]
 
 deps = {
+<<<<<<< HEAD
   'src': 'https://github.com/flutter/buildroot.git' + '@' + 'e664d190b83ba911194a8a9517ae5f8bba3fcfaa',
+=======
+  #'src': 'https://github.com/flutter/buildroot.git' + '@' + '7565131390a39d9d6c460545d7992d76a0faa262',
+  'src': 'https://github.com/clarkezone/buildroot.git' + '@' + '936e021ab4726fa1fd7389622db87a52417e7973'
+>>>>>>> e6390933c... Update linker settings to make more specific
 
    # Fuchsia compatibility
    #
@@ -386,7 +391,8 @@ deps = {
    Var('swiftshader_git') + '/SwiftShader.git' + '@' + '5d1e8540407c138f47028d64684f3da599430aa4',
 
    'src/third_party/angle':
-   Var('github_git') + '/google/angle.git' + '@' + 'ed90c9917b1b7fc6def319184b10609c11b2bd84',
+   #Var('github_git') + '/google/angle.git' + '@' + 'ed90c9917b1b7fc6def319184b10609c11b2bd84',
+   Var('github_git') + '/clarkezone/angle.git' + '@' + 'b2281efa1af738f63faa71343800d64009d81602',
 
    'src/third_party/angle/third_party/vulkan-headers/src':
    Var('fuchsia_git') + '/third_party/Vulkan-Headers.git' + '@' + '5de4e8fab88ef0bd6994d9ddbcc864e3179b9e79',
