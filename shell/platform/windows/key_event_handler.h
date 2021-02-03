@@ -28,7 +28,7 @@ class KeyEventHandler : public KeyboardHookHandler {
       std::function<UINT(UINT cInputs, LPINPUT pInputs, int cbSize)>;
 
   explicit KeyEventHandler(flutter::BinaryMessenger* messenger,
-                           SendInputDelegate delegate = SendInput);
+                           SendInputDelegate delegate = nullptr);
 
   virtual ~KeyEventHandler();
 
