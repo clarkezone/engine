@@ -161,7 +161,7 @@ shared_library("flutter_windows") {
 
 shared_library("flutter_windows_winuwp") {
   deps = [ ":flutter_windows_source" ]
-  libs = [ "windowsapp.lib", "user32.lib" ]
+  libs = [ "windowsapp.lib" ]
   public_configs = [ "//flutter:config" ]
 }
 
