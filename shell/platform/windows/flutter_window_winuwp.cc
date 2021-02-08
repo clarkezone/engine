@@ -18,7 +18,6 @@ FlutterWindowWinUWP::FlutterWindowWinUWP(
   SetEventHandlers();
   ConfigureGamePad();
   ConfigureXboxSpecific();
-  ConfigureXboxSpecific();
 
   current_display_info_ = winrt::Windows::Graphics::Display::
       DisplayInformation::GetForCurrentView();
