@@ -7,10 +7,6 @@
 #include <Fileapi.h>
 #include <Shlwapi.h>
 #include <fcntl.h>
-#include <limits.h>
-#include <sys/stat.h> 
-#include <map>
-#include <string>
 
 #include <algorithm>
 #include <climits>
@@ -24,22 +20,16 @@
 
 namespace fml {
 
-static std::map<HANDLE, std::wstring> hackery;
-
 static std::string GetFullHandlePath(const fml::UniqueFD& handle) {
   wchar_t buffer[MAX_PATH] = {0};
-  auto found = hackery[handle.get()];
-  return WideStringToString(found);
-
-
-  /*const DWORD buffer_size = ::GetFinalPathNameByHandle(
+  const DWORD buffer_size = ::GetFinalPathNameByHandle(
       handle.get(), buffer, MAX_PATH, FILE_NAME_NORMALIZED);
   if (buffer_size == 0) {
     FML_DLOG(ERROR) << "Could not get file handle path. "
                     << GetLastErrorMessage();
     return {};
   }
-  return WideStringToString({buffer, buffer_size});*/
+  return WideStringToString({buffer, buffer_size});
 }
 
 static std::string GetAbsolutePath(const fml::UniqueFD& base_directory,
@@ -232,8 +222,6 @@ fml::UniqueFD OpenDirectory(const char* path,
     FML_DLOG(ERROR) << "Could not open file. " << GetLastErrorMessage();
     return {};
   }
-
-  hackery[handle] = file_name;
 
   return fml::UniqueFD{handle};
 }
