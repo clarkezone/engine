@@ -16,6 +16,8 @@
 
 namespace flutter {
 
+using GetKeyStateHandler = std::function<SHORT(int /* nVirtKey */)>;
+
 // A delegate of |KeyboardKeyHandler| that handles events by sending the
 // raw information through the method channel.
 //
@@ -25,7 +27,7 @@ class KeyboardKeyChannelHandler
  public:
   // Create a |KeyboardKeyChannelHandler| by specifying the messenger
   // through which the events are sent.
-  explicit KeyboardKeyChannelHandler(flutter::BinaryMessenger* messenger);
+  explicit KeyboardKeyChannelHandler(flutter::BinaryMessenger* messenger, GetKeyStateHandler get_key_state);
 
   ~KeyboardKeyChannelHandler();
 
@@ -41,6 +43,8 @@ class KeyboardKeyChannelHandler
  private:
   // The Flutter system channel for key event messages.
   std::unique_ptr<flutter::BasicMessageChannel<rapidjson::Document>> channel_;
+
+  GetKeyStateHandler get_key_state_;
 };
 
 }  // namespace flutter

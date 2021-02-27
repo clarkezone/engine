@@ -39,7 +39,9 @@ KeyboardKeyHandler::KeyboardKeyHandlerDelegate::~KeyboardKeyHandlerDelegate() =
 
 KeyboardKeyHandler::KeyboardKeyHandler(EventRedispatcher redispatch_event)
     : redispatch_event_(redispatch_event), last_sequence_id_(1) {
+      #if !defined(WINUWP)
   assert(redispatch_event_ != nullptr);
+  #endif
 }
 
 KeyboardKeyHandler::~KeyboardKeyHandler() = default;
@@ -75,12 +77,14 @@ void KeyboardKeyHandler::RedispatchEvent(std::unique_ptr<PendingEvent> event) {
 
   pending_redispatches_.push_back(std::move(event));
 
+#if !defined(WINUWP)
   UINT accepted = redispatch_event_(1, &input_event, sizeof(input_event));
   if (accepted != 1) {
     std::cerr << "Unable to synthesize event for unhandled keyboard event "
                  "with scancode "
               << scancode << " (character " << character << ")" << std::endl;
   }
+  #endif
 }
 
 bool KeyboardKeyHandler::KeyboardHook(FlutterWindowsView* view,

@@ -7,6 +7,10 @@
 
 #include <windowsx.h>
 
+#if defined(WINUWP)
+#include <winrt/Windows.UI.Core.h>
+#endif
+
 #include <memory>
 #include <mutex>
 #include <string>

@@ -57,7 +57,7 @@ class SpyKeyboardKeyHandler : public KeyboardHandlerBase {
     real_implementation_ =
         std::make_unique<KeyboardKeyHandler>(redispatch_event);
     real_implementation_->AddDelegate(
-        std::make_unique<KeyboardKeyChannelHandler>(messenger));
+        std::make_unique<KeyboardKeyChannelHandler>(messenger, nullptr));
     ON_CALL(*this, KeyboardHook(_, _, _, _, _, _, _))
         .WillByDefault(Invoke(real_implementation_.get(),
                               &KeyboardKeyHandler::KeyboardHook));

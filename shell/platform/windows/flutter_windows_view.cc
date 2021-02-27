@@ -78,15 +78,45 @@ void FlutterWindowsView::RegisterKeyboardHandlers(
   // of the event. In order to allow the same real event in the future, the
   // handler is "toggled" when events pass through, therefore the redispatching
   // algorithm does not allow more than 1 handler that takes |SendInput|.
+  #if defined(WINUWP)
+  auto key_handler = std::make_unique<flutter::KeyboardKeyHandler>(nullptr);
+  #else
   auto key_handler = std::make_unique<flutter::KeyboardKeyHandler>(SendInput);
-  key_handler->AddDelegate(
-      std::make_unique<KeyboardKeyChannelHandler>(messenger));
+  #endif
+
+    #if defined(WINUWP)
+    key_handler->AddDelegate(
+      std::make_unique<KeyboardKeyChannelHandler>(messenger, 
+      [](int nVirtKey) -> SHORT {     
+auto cw = winrt::Windows::UI::Core::CoreWindow::GetForCurrentThread();
+return static_cast<SHORT>(cw.GetKeyState(winrt::Windows::System::VirtualKey{nVirtKey}));
+    return 1;
+  }
+      ));
+#else
+key_handler->AddDelegate(
+std::make_unique<KeyboardKeyChannelHandler>(messenger, GetKeyState));
+#endif
+
+      #if defined(WINUWP)
+      key_handler->AddDelegate(std::make_unique<KeyboardKeyEmbedderHandler>(
+      [this](const FlutterKeyEvent& event, FlutterKeyEventCallback callback,
+             void* user_data) {
+        return engine_->SendKeyEvent(event, callback, user_data);
+      },
+     [](int nVirtKey) -> SHORT {     
+auto cw = winrt::Windows::UI::Core::CoreWindow::GetForCurrentThread();
+return static_cast<SHORT>(cw.GetKeyState(winrt::Windows::System::VirtualKey{nVirtKey}));
+    return 1;
+  }));
+      #else
   key_handler->AddDelegate(std::make_unique<KeyboardKeyEmbedderHandler>(
       [this](const FlutterKeyEvent& event, FlutterKeyEventCallback callback,
              void* user_data) {
         return engine_->SendKeyEvent(event, callback, user_data);
       },
       GetKeyState));
+      #endif
   AddKeyboardHandler(std::move(key_handler));
   AddKeyboardHandler(
       std::make_unique<flutter::TextInputPlugin>(messenger, this));

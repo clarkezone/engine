@@ -345,6 +345,9 @@ void KeyboardKeyEmbedderHandler::InitCriticalKeys() {
   auto createCheckedKey = [this](UINT virtual_key, bool extended,
                                  bool check_pressed,
                                  bool check_toggled) -> CriticalKey {
+    #if defined(WINUWP)
+return CriticalKey{};
+    #else
     UINT scan_code = MapVirtualKey(virtual_key, MAPVK_VK_TO_VSC);
     return CriticalKey{
         .physical_key = getPhysicalKey(scan_code, extended),
@@ -355,6 +358,7 @@ void KeyboardKeyEmbedderHandler::InitCriticalKeys() {
                           ? !!(get_key_state_(virtual_key) & kStateMaskToggled)
                           : false,
     };
+    #endif
   };
 
   // TODO(dkwingsmt): Consider adding more critical keys here.

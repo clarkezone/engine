@@ -49,7 +49,7 @@ TEST(KeyboardKeyChannelHandlerTest, KeyboardHookHandling) {
         }
       });
 
-  KeyboardKeyChannelHandler handler(&messenger);
+  KeyboardKeyChannelHandler handler(&messenger, nullptr);
   bool last_handled = false;
 
   handler.KeyboardHook(
@@ -88,7 +88,7 @@ TEST(KeyboardKeyChannelHandlerTest, ExtendedKeysAreSentToRedispatch) {
         }
       });
 
-  KeyboardKeyChannelHandler handler(&messenger);
+  KeyboardKeyChannelHandler handler(&messenger, nullptr);
   bool last_handled = true;
 
   // Extended key flag is passed to redispatched events if set.
