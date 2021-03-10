@@ -5,22 +5,16 @@
 #ifndef FLUTTER_SHELL_PLATFORM_WINDOWS_UWP_FLUTTER_WINDOW_H_
 #define FLUTTER_SHELL_PLATFORM_WINDOWS_UWP_FLUTTER_WINDOW_H_
 
-<<<<<<< HEAD
 #include <third_party/cppwinrt/generated/winrt/Windows.Foundation.Collections.h>
 #include <third_party/cppwinrt/generated/winrt/Windows.Graphics.Display.h>
 #include <third_party/cppwinrt/generated/winrt/Windows.System.Profile.h>
 #include <third_party/cppwinrt/generated/winrt/Windows.UI.Composition.h>
 #include <third_party/cppwinrt/generated/winrt/Windows.UI.Core.h>
 #include <third_party/cppwinrt/generated/winrt/Windows.UI.Input.h>
+#include <third_party/cppwinrt/generated/winrt/Windows.UI.Text.Core.h>
+#include <third_party/cppwinrt/generated/winrt/Windows.UI.ViewManagement.h>
 #include <third_party/cppwinrt/generated/winrt/Windows.UI.ViewManagement.Core.h>
 #include <windows.ui.core.h>
-=======
-#include <third_party/cppwinrt/generated/winrt/Windows.UI.Composition.h>
-#include <third_party/cppwinrt/generated/winrt/Windows.UI.Input.h>
-#include <third_party/cppwinrt/generated/winrt/Windows.UI.Text.Core.h>
-#include <third_party/cppwinrt/generated/winrt/Windows.UI.ViewManagement.Core.h>
-#include <third_party/cppwinrt/generated/winrt/Windows.UI.ViewManagement.h>
->>>>>>> ab2284a3d... Windows UWP: Add support for emulated mouse cursor for use with gamepads on devices which do not have a physical mouse.
 
 #include "flutter/shell/platform/embedder/embedder.h"
 #include "flutter/shell/platform/windows/display_helper_winuwp.h"
